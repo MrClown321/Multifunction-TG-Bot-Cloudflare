@@ -6,6 +6,23 @@ declare namespace Cloudflare {
 		mainModule: typeof import("./src/index");
 	}
 	interface Env {
+		// KV Namespace for state management
+		BOT_KV: KVNamespace;
+
+		// Secrets (set via wrangler secret put)
+		BOT_TOKEN: string;
+		GOOGLE_CLIENT_ID: string;
+		GOOGLE_CLIENT_SECRET: string;
+		GOOGLE_REFRESH_TOKEN: string;
+		WEBHOOK_SECRET?: string;
+
+		// Environment Variables
+		FOLDER_ID: string;
+		INDEX_URL: string;
+		OWNER_GITHUB: string;
+		OWNER_TELEGRAM: string;
+		AUTHORIZED_CHAT_ID: string;
+		ADMIN_USER_IDS: string;
 	}
 }
 interface Env extends Cloudflare.Env {}

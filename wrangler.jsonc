@@ -1,4 +1,5 @@
 /**
+ * Advanced Telegram Bot for Google Drive Management
  * For more details on how to configure Wrangler, refer to:
  * https://developers.cloudflare.com/workers/wrangler/configuration/
  */
@@ -7,35 +8,50 @@
 	"name": "tg-bot-advanced",
 	"main": "src/index.ts",
 	"compatibility_date": "2026-01-31",
+	"compatibility_flags": ["nodejs_compat"],
 	"observability": {
 		"enabled": true
+	},
+	/**
+	 * WASM Modules
+	 * MediaInfo WASM for media file analysis
+	 */
+	"rules": [
+		{
+			"type": "CompiledWasm",
+			"globs": ["**/*.wasm"]
+		}
+	],
+	/**
+	 * KV Namespace Binding
+	 * Create the namespace with: wrangler kv namespace create BOT_KV
+	 */
+	"kv_namespaces": [
+		{
+			"binding": "BOT_KV",
+			"id": "a0877426489d4616bad838ca49fa7971"
+		}
+	],
+	/**
+	 * Environment Variables (non-sensitive)
+	 * These can be set here or via dashboard
+	 */
+	"vars": {
+		"FOLDER_ID": "0APE_oMXIONZHUk9PVA",
+		"INDEX_URL": "https://tg-bot-advanced.tg-rss.workers.dev",
+		"OWNER_GITHUB": "https://github.com/yourusername",
+		"OWNER_TELEGRAM": "yourusername",
+		"AUTHORIZED_CHAT_ID": "-1003860485730",
+		"ADMIN_USER_IDS": "6921696346"
 	}
 	/**
-	 * Smart Placement
-	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
+	 * Secrets (set via CLI, not in config file)
+	 * Run these commands to set secrets:
+	 * 
+	 * wrangler secret put BOT_TOKEN
+	 * wrangler secret put GOOGLE_CLIENT_ID
+	 * wrangler secret put GOOGLE_CLIENT_SECRET
+	 * wrangler secret put GOOGLE_REFRESH_TOKEN
+	 * wrangler secret put WEBHOOK_SECRET
 	 */
-	// "placement": {  "mode": "smart" }
-	/**
-	 * Bindings
-	 * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
-	 * databases, object storage, AI inference, real-time communication and more.
-	 * https://developers.cloudflare.com/workers/runtime-apis/bindings/
-	 */
-	/**
-	 * Environment Variables
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
-	 * Note: Use secrets to store sensitive data.
-	 * https://developers.cloudflare.com/workers/configuration/secrets/
-	 */
-	// "vars": {  "MY_VARIABLE": "production_value" }
-	/**
-	 * Static Assets
-	 * https://developers.cloudflare.com/workers/static-assets/binding/
-	 */
-	// "assets": {  "directory": "./public/",  "binding": "ASSETS" }
-	/**
-	 * Service Bindings (communicate between multiple Workers)
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
-	 */
-	// "services": [  {   "binding": "MY_SERVICE",   "service": "my-service"  } ]
 }
